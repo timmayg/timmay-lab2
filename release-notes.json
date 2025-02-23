@@ -1,0 +1,18 @@
+{
+  "release_notes": {
+    "product": "Tim's timmay-lab2 AWX Execution Environment",
+    "quay_repository": "https://quay.io/repository/timmayg/timmay-lab2",
+    "git_repository": "https://github.com/timmayg",
+    "linkedin": "https://www.linkedin.com/in/timglen",
+    "versions": [
+      {
+        "version": "1.0",
+        "release_date": "Month XX, YYYY",
+        "details": [
+          "Enter some stuff here",
+          "Enter some stuff here"
+        ]
+      },
+    ]
+  }
+}
