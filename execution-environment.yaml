@@ -2,18 +2,23 @@ version: 3
 
 images:
   base_image:
-    name: quay.io/centos/centos:stream9
+    # completely vanilla image, works with most anything RHELish (Fedora, CentOS Stream)
+    #name: registry.access.redhat.com/ubi9/ubi:latest
+    name: quay.io/rockylinux/rockylinux:9
 
 dependencies:
-  python:
-    - requests
-    - hvac
+  # install and use a bleeding-edge Python!
+  python_interpreter:
+    # (optional) provide the name of an OS package to install
+    package_system: python3.11
+    # (optional) provide the path of the Python interpreter to use for everything else.
+    # defaults to /usr/bin/python3; we'll do some sanity checking with this later...
+    python_path: /usr/bin/python3.11
+  ansible_core:
+    # anything valid to `pip install` - a git ref, whatever 
+    package_pip: ansible-core<2.16
+  ansible_runner:
+    package_pip: ansible-runner
   galaxy:
     collections:
-      - community.crypto
-      - community.hashi_vault
-      - cisco.ios
-
-# additional_build_steps:
-#   prepend:
-#    - RUN microdnf install -y git
+    - ansible.utils
