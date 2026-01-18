@@ -2,44 +2,18 @@ version: 3
 
 images:
   base_image:
-    name: registry.access.redhat.com/ubi9/ubi:latest
-    # name: localhost/awx-ee:latest
-    # name: quay.io/ansible/awx-ee-minimal:latest
-    # name: registry.redhat.io/ansible-automation-platform/ee-minimal-rhel8:latest
-    # name: quay.io/centos/centos:stream9  # vanilla image
- 
-  dependencies:
-  python_interpreter:
-    # (optional) provide the name of an OS package to install
-    package_system: python3.11
-    # (optional) provide the path of the Python interpreter to use for everything else.
-    # defaults to /usr/bin/python3; we'll do some sanity checking with this later...
-    python_path: /usr/bin/python3.11
+    name: registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel8:latest
 
-  ansible_core:
-    # anything valid to `pip install` - a git ref, whatever 
-    package_pip: ansible-core<2.16
-
-  ansible_runner:
-    package_pip: ansible-runner
-
+dependencies:
+  python:
+    - requests
+    - hvac
   galaxy:
     collections:
-    - ansible.utils
-
-additional_build_files:
-  # copy arbitrary files next to this EE def into the build context - we can refer to them later...
-  - src: release-notes.json
-    dest: configs
+      - community.crypto
+      - community.hashi_vault
+      - cisco.ios
 
 additional_build_steps:
-  prepend_base:
-     - COPY _build/configs/release-notes.json /release-notes.json
-     - RUN yum install -y git
-#    - RUN curl -o /release-notes.json https://raw.githubusercontent.com/timmayg/timmay-lab/main/release-notes.json
-  append_base:
-
-#    - ENV timmay_lab_version=v2.34b1
-#    - RUN yum -y update && yum install -y curl --allowerasing
-#    - RUN curl -o /release-notes.json https://raw.githubusercontent.com/timmayg/timmay-lab/main/release-notes.json
-
+  prepend:
+    - RUN microdnf install -y git
